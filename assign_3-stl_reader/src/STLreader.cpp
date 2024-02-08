@@ -8,13 +8,7 @@
 using namespace std;
 STLreader::STLreader(){} // default constructor
 STLreader::~STLreader(){} // destructor
-// comparsion function creates data structure for points and triangles
-// here references of lop and lot are passed here as parameter
-// lot contain triangles, triangles contain v1,v2,v3
-// v1,v2,v3 contains index address of points in lop 
-// map is used to check whether current point is present map or not because map is faster than vector
-// due to the above lop contain unique points
-// each point contain x,y,z
+// comparison stores unique points(lop) and their indices in triangle(lot)
 void STLreader::comparison(string stlFilePath,vector<Triangle> & lot, vector<Point> & lop){//lot = listOfTriangles, lop = listOfPoints
     map<Point, int> comparisonMap;
     ifstream stlFile;
@@ -24,26 +18,18 @@ void STLreader::comparison(string stlFilePath,vector<Triangle> & lot, vector<Poi
     if (!stlFile.is_open()) {
         cerr << "Error opening file!" << endl;
     }
-    // triangleIndices stores the address(index position of a point in lop)
-    // this array contain index position of points in lop which are vertices of triangle
-    // or simply this is material for storing in lot
     int triangleIndices[3] = {0,0,0};
     int triangleIndicesCurrentIndex = 0; // 
     int lopCurrentIndex = 0;
-    while(getline(stlFile,stlLine)){
+    while(getline(stlFile,stlLine)){ // checking everyline
         int positionVertex = stlLine.find("vertex ");
         int positionEndLoop = stlLine.find("endloop");
-        //if vertex word is found in stlLine string then below if statement will be executed
         if(positionVertex != string::npos){
-            string str = stlLine.substr(positionVertex+7); // str contains coordinates in string datatype
+            string str = stlLine.substr(positionVertex+7);
             double threeCoordinatesArr[3] = {0,0,0};
-            // below loop extracts the coordinates from each line and stores it into threeCIordinatesArr
-            // which will be used to make a point & store that point in lop
             for(int i = 0; i<3; i++){
                 int pos3 = str.find(" ") ;
                 threeCoordinatesArr[i] = stod(str.substr(0,pos3));
-                // the below commented code writes the coordinates to console in unstructured way
-                //cout<<str.substr(0,pos3)<<endl;
                 str = str.substr(pos3+1);
             }
             bool foundPoint = false;
