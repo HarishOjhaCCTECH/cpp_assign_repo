@@ -13,4 +13,4 @@ vector<Triangle> & Triangulation::getTriangles(){
 vector<Normal> & Triangulation::getNormals(){
     return mNormals;
 }
-Triangulation Triangulation::tObj;
+Triangulation Triangulation::tObj; // defining the static object here to allocate the memory
