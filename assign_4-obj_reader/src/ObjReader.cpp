@@ -7,6 +7,7 @@ ObjReader ObjReader::obu;
 ObjReader & ObjReader::getObj(){
     return obu;
 }
+//below read function reads the obj file of 3d figure and stores it in triangulation
 void ObjReader::read(Triangulation & triagu, string filePath){
     ifstream objFile;
     string objLine;
