@@ -1,3 +1,4 @@
+// purpose - stores all the points and triangles in the mesh
 #pragma once
 #include "Point3D.h"
 #include "Triangle.h"
